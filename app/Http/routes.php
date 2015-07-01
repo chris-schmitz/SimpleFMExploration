@@ -13,28 +13,8 @@ use Soliant\SimpleFM\Adapter;
 |
 */
 
+Route::get('api/zips/', ['as' => 'api.zip.index', 'uses' => 'ZipsApiController@index']);
 
 Route::get('/', function () {
 
-    $hostParameters = [
-    'hostname' => "fmrpc.skeletonkey.com",
-    'username' => "demo",
-    'password' => "skdemo!",
-    'dbname'   => "ZipCodes",
-    ];
-
-    $adapter = new Adapter($hostParameters);
-    $adapter->setCallParams([
-        'layoutname' => 'Zips',
-        'commandstring' => '-findall'
-    ]);
-
-    $result = $adapter->execute();
-    // dd($result);
-
-    foreach($result['rows'] as $row){
-        echo "<div>";
-        var_dump($row);
-        echo "</div>";
-    }
 });

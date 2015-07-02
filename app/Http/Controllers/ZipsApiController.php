@@ -15,19 +15,18 @@ class ZipsApiController extends Controller
 
     public function __construct(Adapter $adapter){
 
-        $this->adapter = $adapter;
-    }
-
-    public function index(){
-
         $hostParameters = [
             'hostname' => "fmrpc.skeletonkey.com",
             'username' => "demo",
             'password' => "skdemo!",
             'dbname'   => "ZipCodes",
         ];
-
+        $this->adapter = $adapter;
         $this->adapter->setHostParams($hostParameters);
+    }
+
+    public function index(){
+
 
         $this->adapter->setCallParams([
             'layoutname'    => 'Zips',
@@ -35,15 +34,11 @@ class ZipsApiController extends Controller
         ]);
 
         $result = $this->adapter->execute();
-        dd($result['rows']);
 
-        $firstRecord = $result['rows'][0];
-        foreach($result['rows'] as $record){
+        $fields = array_keys($result['rows'][0]);
+        $rows = $result['rows'];
 
-            foreach($fields as $field){
-                 // $row[$field] = $record[]
-            }
-            $tableContent[] = $row;
-        } 
+
+        return view('zips.index', compact('fields', 'rows'));
     }
 }

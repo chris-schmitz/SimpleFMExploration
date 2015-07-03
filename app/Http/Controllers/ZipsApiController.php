@@ -26,7 +26,7 @@ class ZipsApiController extends Controller
         if($this->request->has('returnRowCount')){
             $returnRowCount = $this->request->get('returnRowCount');
         } 
-        
+
         try{
             $result = $this->zips->getAllZipcodes($returnRowCount);
             $fields = array_keys($result['rows'][0]);
@@ -40,6 +40,11 @@ class ZipsApiController extends Controller
     }
 
     public function show($zip){
-        return 'Show';
+        try{
+            $zipRecord = $this->zips->getZipRecord($zip);
+            return $zipRecord;
+        } catch (\Exception $exception){
+            dd($exception->getMessage());
+        }
     }
 }

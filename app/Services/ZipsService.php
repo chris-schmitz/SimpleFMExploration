@@ -13,6 +13,9 @@ class ZipsService {
         $hostParameters = config('database.connections.filemaker');
         $this->adapter = $adapter;
         $this->adapter->setHostParams($hostParameters);
+        // setting the default layout, note if you want to interact with 
+        // a different layout you can override it in the method
+        $this->adapter->setLayoutName('Zips');
     }
 
     public function getAllZipcodes($returnRowCount){
@@ -30,14 +33,12 @@ class ZipsService {
 
         $result = $this->adapter->execute();
 
-        if($result['error'] !== 0){
-            throw new \Exception('An error was thrown: ' . $result['errortext']);
-        }
+        $this->checkResultForError($result);
+
         return $result;
     }
 
     public function getZipRecord($zip){
-        $this->adapter->setLayoutname('Zips');
 
         $string = $this->adapter->setCommandarray([
             '-db'   => 'ZipCodes',
@@ -47,6 +48,31 @@ class ZipsService {
         ]);
 
         $result = $this->adapter->execute();
-        dd($result);
+        $this->checkResultForError($result);
+
+        return $result;
+    }
+
+    public function updateZipRecord($recid, $newZipData){
+        $newZipData['-db'] = 'ZipCodes';
+        $newZipData['-lay'] = 'Zips';
+        $newZipData['-recid'] = $recid;
+        $newZipData['-edit'] = null;
+
+        $this->adapter->setCommandarray($newZipData);
+        $result = $this->adapter->execute();
+        $this->checkResultForError($result);
+        
+        return $result;
+    }
+
+    protected function checkResultForError($result){
+        if(empty($result)){
+            throw new \Exception('Zip Service Error.');
+        }
+
+        if($result['error'] !== 0){
+            throw new \Exception('An error was thrown: ' . $result['errortext']);
+        }
     }
 }

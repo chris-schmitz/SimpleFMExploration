@@ -16,6 +16,8 @@ Route::get('/', function () {
     return redirect('api/zips/?returnRowCount=50');
 });
 
+
 Route::get('api/zips/', ['as' => 'api.zip.index', 'uses' => 'ZipsApiController@index']);
-Route::get('api/zips/{zip}', ['as' => 'api.zip.index', 'uses' => 'ZipsApiController@show']);
+Route::get('api/zips/{zip}', ['as' => 'api.zip.edit', 'uses' => 'ZipsApiController@edit']);
+Route::put('api/zips/{recid}', ['as' => 'api.zip.update', 'uses' => 'ZipsApiController@update']);
 

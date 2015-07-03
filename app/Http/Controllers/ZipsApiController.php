@@ -30,7 +30,7 @@ class ZipsApiController extends Controller
         try{
             $result = $this->zips->getAllZipcodes($returnRowCount);
             $fields = array_keys($result['rows'][0]);
-            $rows = $result['rows'];
+            $rows   = $result['rows'];
 
             return view('zips.index', compact('fields', 'rows'));
 
@@ -39,12 +39,31 @@ class ZipsApiController extends Controller
         }
     }
 
-    public function show($zip){
+    public function edit($zip){
         try{
-            $zipRecord = $this->zips->getZipRecord($zip);
-            return $zipRecord;
+            $result    = $this->zips->getZipRecord($zip);
+            $zipRecord = $result['rows'][0];
+            return view('zips.edit', compact('zipRecord'));
         } catch (\Exception $exception){
             dd($exception->getMessage());
         }
+    }
+
+    public function update($recid){
+        $data    = $this->request->all();
+        $zipData = $this->removeNonDataKeys($data);
+
+        try{
+            $result = $this->zips->updateZipRecord($recid, $zipData);
+            dd($result);
+        } catch (\Exception $exception){
+            dd($exception->getMessage());
+        }
+    }
+
+    protected function removeNonDataKeys($formInput){
+        array_forget($formInput, '_method');
+        array_forget($formInput, '_token');
+        return $formInput;
     }
 }

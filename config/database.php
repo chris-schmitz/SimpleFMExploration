@@ -47,10 +47,10 @@ return [
     'connections' => [
 
         'filemaker' => [
-            'hostname' => "10.0.1.8",
-            'username' => "demo",
-            'password' => "skdemo!",
-            'dbname'   => "ZipCodes",
+            'hostname' => env('FM_HOSTNAME', 'fmrpc.skeletonkey.com'),
+            'username' => env('FM_USERNAME', ''),
+            'password' => env('FM_PASSWORD', ''),
+            'dbname'   => env('FM_DBNAME', 'ZipCodes'),
         ],
 
         'sqlite' => [

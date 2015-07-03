@@ -7,38 +7,39 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use Soliant\SimpleFM\Adapter;
+use App\Services\ZipsService;
 
 class ZipsApiController extends Controller
 {
-    protected $adapter; 
 
-    public function __construct(Adapter $adapter){
+    protected $zips;
+    protected $request;
 
-        $hostParameters = [
-            'hostname' => "fmrpc.skeletonkey.com",
-            'username' => "demo",
-            'password' => "skdemo!",
-            'dbname'   => "ZipCodes",
-        ];
-        $this->adapter = $adapter;
-        $this->adapter->setHostParams($hostParameters);
+    public function __construct(ZipsService $zips, Request $request){
+        $this->zips = $zips;
+        $this->request = $request;
     }
 
     public function index(){
 
+        $returnRowCount = 'all';
+        if($this->request->has('returnRowCount')){
+            $returnRowCount = $this->request->get('returnRowCount');
+        } 
+        
+        try{
+            $result = $this->zips->getAllZipcodes($returnRowCount);
+            $fields = array_keys($result['rows'][0]);
+            $rows = $result['rows'];
 
-        $this->adapter->setCallParams([
-            'layoutname'    => 'Zips',
-            'commandstring' => '-findall'
-        ]);
+            return view('zips.index', compact('fields', 'rows'));
 
-        $result = $this->adapter->execute();
+        } catch (\Exception $exception){
+            dd($exception->getMessage());
+        }
+    }
 
-        $fields = array_keys($result['rows'][0]);
-        $rows = $result['rows'];
-
-
-        return view('zips.index', compact('fields', 'rows'));
+    public function show($zip){
+        return 'Show';
     }
 }

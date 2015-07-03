@@ -21,6 +21,9 @@ Zipcode Index
         </tr>
         @foreach($rows as $row)
             <tr>
+                <td>
+                    <a class="btn btn-success" href="/api/zips/{{$row['zip']}}">Edit</a>
+                </td>
                 @foreach($fields as $field)
                     <td>{{$row[$field]}}</td>
                 @endforeach
@@ -28,4 +31,9 @@ Zipcode Index
         @endforeach
     </table>
 </div> 
+
+<div class="well">
+    {{var_dump($rows)}}
+</div> 
+
 @stop

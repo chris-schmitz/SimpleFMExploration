@@ -46,6 +46,13 @@ return [
 
     'connections' => [
 
+        'filemaker' => [
+            'hostname' => "10.0.1.8",
+            'username' => "demo",
+            'password' => "skdemo!",
+            'dbname'   => "ZipCodes",
+        ],
+
         'sqlite' => [
             'driver'   => 'sqlite',
             'database' => storage_path('database.sqlite'),

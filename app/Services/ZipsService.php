@@ -54,16 +54,27 @@ class ZipsService {
     }
 
     public function updateZipRecord($recid, $newZipData){
-        $newZipData['-db'] = 'ZipCodes';
-        $newZipData['-lay'] = 'Zips';
+        $newZipData['-db']    = 'ZipCodes';
+        $newZipData['-lay']   = 'Zips';
         $newZipData['-recid'] = $recid;
-        $newZipData['-edit'] = null;
+        $newZipData['-edit']  = null;
 
         $this->adapter->setCommandarray($newZipData);
         $result = $this->adapter->execute();
         $this->checkResultForError($result);
-        
+
         return $result;
+    }
+
+    public function destroyZipRecord($recid){
+        $this->adapter->setCommandarray([
+            '-db'     => 'ZipCodes',
+            '-lay'    => 'Zips',
+            '-recid'  => $recid,
+            '-delete' => null
+        ]);
+        $result = $this->adapter->execute();
+        $this->checkResultForError($result);
     }
 
     protected function checkResultForError($result){

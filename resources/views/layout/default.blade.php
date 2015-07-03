@@ -21,6 +21,9 @@
   <body>
 
     <div class="container">
+
+      @include('layout.notifications')
+
       @yield('content')
     </div> 
 

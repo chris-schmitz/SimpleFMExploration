@@ -18,9 +18,10 @@ Edit Zip {{ $zipRecord['zip'] }}
         - Use a hidden input to note the PUT/PATCH/DELETE methods
         - Use a hidden input to add the csrf token
         --}}
-        <form action="{{ route('api.zip.update', ['zip' => $zipRecord['recid'] ]) }}" method="POST">
+        <form action="{{ route('api.zip.update', ['zip' => $zipRecord['zip'] ]) }}" method="POST">
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="recid" value="{{ $zipRecord['recid'] }}">
             <div class="form-group">
                 <label for="zip">Zipcode</label>
                 <input type="text" class="form-control" name="zip" value="{{ $zipRecord['zip'] }}">
@@ -60,9 +61,18 @@ Edit Zip {{ $zipRecord['zip'] }}
 
             <div class="form-group">
                 <button type="submit" class="btn btn-success">Save</button>
-                <a class="btn btn-danger" href="{{ route('api.zip.index', ['returnRowCount' => 50] ) }}">Cancel</a>
+
+                <a class="btn btn-primary pull-right" href="{{ route('api.zip.index', ['returnRowCount' => 50] )}}">Back to list</a>
             </div> 
         </form>
+        <form action="{{ route('api.zip.delete', ['zip' => $zipRecord['zip'] ]) }}" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="recid" value="{{ $zipRecord['recid'] }}">
+
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+
     </div> 
 
     <div class="panel-footer">

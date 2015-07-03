@@ -31,34 +31,62 @@ class ZipsApiController extends Controller
             $result = $this->zips->getAllZipcodes($returnRowCount);
             $fields = array_keys($result['rows'][0]);
             $rows   = $result['rows'];
-
-            return view('zips.index', compact('fields', 'rows'));
-
         } catch (\Exception $exception){
             dd($exception->getMessage());
         }
+
+        return view('zips.index', compact('fields', 'rows'));
     }
 
     public function edit($zip){
         try{
             $result    = $this->zips->getZipRecord($zip);
             $zipRecord = $result['rows'][0];
-            return view('zips.edit', compact('zipRecord'));
         } catch (\Exception $exception){
             dd($exception->getMessage());
         }
+
+        return view('zips.edit', compact('zipRecord'));
     }
 
-    public function update($recid){
+    public function update($zip){
         $data    = $this->request->all();
         $zipData = $this->removeNonDataKeys($data);
 
+        $recid = $zipData['recid'];
+        array_forget($zipData, 'recid');
+
         try{
-            $result = $this->zips->updateZipRecord($recid, $zipData);
-            dd($result);
+            $result           = $this->zips->updateZipRecord($recid, $zipData);
+            $zipRecord        = $result['rows'][0];
+
+            $message['style'] = 'success';
+            $message['text']  = 'You changes have been saved.';
+
+            $this->request->session()->flash('message', $message);
+
         } catch (\Exception $exception){
             dd($exception->getMessage());
         }
+
+        return view('zips.edit', compact('zipRecord'));
+    }
+
+    public function delete($zip){
+        $recid = $this->request->get('recid');
+
+        try{
+            $this->zips->destroyZipRecord($recid);
+
+            $message['style'] = 'success';
+            $message['text']  = "The record has been deleted.";
+            $returnRowCount   = 50;
+
+        } catch (\Exception $exception){
+            dd($exception->getMessage());
+        }
+
+        return redirect()->route('api.zip.index', compact('returnRowCount'))->with(compact('message'));
     }
 
     protected function removeNonDataKeys($formInput){

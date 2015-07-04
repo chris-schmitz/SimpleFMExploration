@@ -43,9 +43,9 @@ class ZipsApiController extends Controller
         } catch (\Exception $exception){
             dd($exception->getMessage());
         }
-        // todo: add in a check for a request parameter for each method
         if($this->request->has('json') && $this->request->get('json') == true){
-            return compact(['fields', 'rows']);
+            $data = compact(['fields', 'rows']);
+            return compact('data');
         }
         return view('zips.index', compact('fields', 'rows'));
     }
@@ -72,6 +72,11 @@ class ZipsApiController extends Controller
             dd($exception->getMessage());
         }
 
+        if($this->request->has('json') && $this->request->get('json') == true){
+            $data = compact('zipRecord');
+            return compact('data');
+        }
+
         return view('zips.edit', compact('zipRecord'));
     }
 
@@ -83,6 +88,12 @@ class ZipsApiController extends Controller
             dd($exception->getMessage());
         }
 
+
+       if($this->request->has('json') && $this->request->get('json') == true){
+            $data = compact('zipRecord');
+            return compact('data');
+        }
+ 
         return view('zips.edit', compact('zipRecord'));
     }
 
@@ -108,6 +119,11 @@ class ZipsApiController extends Controller
             dd($exception->getMessage());
         }
 
+       if($this->request->has('json') && $this->request->get('json') == true){
+            $data = compact('zipRecord');
+            return compact('data');
+        }
+
         return view('zips.edit', compact('zipRecord'));
     }
 
@@ -123,6 +139,11 @@ class ZipsApiController extends Controller
 
         } catch (\Exception $exception){
             dd($exception->getMessage());
+        }
+
+       if($this->request->has('json') && $this->request->get('json') == true){
+            $data = ['success' => true];
+            return compact('data');
         }
 
         return redirect()->route('api.zip.index', compact('returnRowCount'))->with(compact('message'));

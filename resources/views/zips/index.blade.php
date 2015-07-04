@@ -15,6 +15,7 @@ Zipcode Index
     </div> 
     <table class="table table-striped">
         <tr>
+            <th>{{-- blank title for edit button --}}</th>
             @foreach($fields as $field)
                 <th>{{$field}}</th>
             @endforeach

@@ -9,6 +9,17 @@ class ZipsService {
 
     protected $adapter;
 
+    // Note: You don't necessarily *need* to exclude these columns, I'm just pulling them out to simplify the demo's display
+    protected $columnsToExclude = [
+        'index',
+        'modid',
+        'world_region',
+        'decommissioned',
+        'estimated_population',
+        'notes',
+        'unacceptable_cities'
+    ];
+
     public function __construct(Adapter $adapter){
         $hostParameters = config('database.connections.filemaker');
         $this->adapter = $adapter;
@@ -26,14 +37,20 @@ class ZipsService {
         // separately, you *must* set the layout name as a separate method call (see the `getZipRecord()`
         // method below). If the layoutname property on the adapter is not set you will get an error 
         // stating that the layout is not set *even if it's set with the `-lay` flag in your command*.
-        $this->adapter->setCallParams([
-            'layoutname'    => 'Zips',
-            'commandstring' => "-findall&-max=$returnRowCount"
-        ]);
+        try{
+            $this->adapter->setCallParams([
+                'layoutname'    => 'Zips',
+                'commandstring' => "-findall&-max=$returnRowCount"
+            ]);
 
-        $result = $this->adapter->execute();
+            $result = $this->adapter->execute();
 
-        $this->checkResultForError($result);
+            $this->checkResultForError($result);
+            $this->forgetUnnededColumns($result['rows']);
+            dd($result);
+        } catch (\Exception $exception){
+            dd($exception->getMessage());
+        }
 
         return $result;
     }
@@ -84,6 +101,15 @@ class ZipsService {
 
         if($result['error'] !== 0){
             throw new \Exception('An error was thrown: ' . $result['errortext']);
+        }
+    }
+
+    protected function forgetUnnededColumns(&$returnedResult){
+
+        foreach($returnedResult as $index => $columns){
+            foreach($this->columnsToExclude as $column){
+                array_forget($returnedResult[$index], $column);
+            }
         }
     }
 }

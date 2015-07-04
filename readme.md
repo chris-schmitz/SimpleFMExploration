@@ -24,7 +24,7 @@ You'll need to create a `.env` file to use this project. To do so:
 - Make a copy of the `.env.example` file found at the root of this project and name it `.env`
 - In the terminal, cd to the root of the project and run the following command to generate the application key:
 
-    php artisan key:generate
+        php artisan key:generate
 
 - Open the `.env` file. At the bottom you'll fine the `FM_...` configuration items.
     - Change the `FM_HOSTNAME` value to your FileMaker Server's IP or domain name
@@ -39,7 +39,7 @@ Once your files are hosted on your web server you'll need to install the package
     - You should see the `composer.json` file
 - Run the following command:
 
-    sudo composer install
+        sudo composer install
 
 # The FileMaker Database Setup
 
@@ -66,4 +66,4 @@ Since this is a demo it's ok to post the credentials online, however *if you pla
 - Confirm that you can log in to each account via FileMaker Pro.
 - Open a web browser and confirm you can access the database via the following url (replace the `127.0.0.1` with your FileMaker Server's IP or domain name):
     
-    `http://127.0.0.1/fmi/xml/fmresultset.xml?-db=ZipCodes&-lay=Zips&-findany`
+        http://127.0.0.1/fmi/xml/fmresultset.xml?-db=ZipCodes&-lay=Zips&-findany

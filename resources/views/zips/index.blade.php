@@ -12,6 +12,7 @@ Zipcode Index
     </div> 
     <div class="panel-body">
     Below is a list of all zipcodes within the US.
+    <a class="btn btn-success pull-right" href="{{ route('api.zip.create') }}">New</a>
     </div> 
     <table class="table table-striped">
         <tr>
@@ -23,7 +24,7 @@ Zipcode Index
         @foreach($rows as $row)
             <tr>
                 <td>
-                    <a class="btn btn-success" href="/api/zips/{{$row['zip']}}">Edit</a>
+                    <a class="btn btn-success" href="{{ route('api.zip.edit', [ 'zip' => $row['zip'] ]) }}">Edit</a>
                 </td>
                 @foreach($fields as $field)
                     <td>{{$row[$field]}}</td>

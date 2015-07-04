@@ -38,6 +38,14 @@ class ZipsApiController extends Controller
         return view('zips.index', compact('fields', 'rows'));
     }
 
+    public function create(){
+        return view('zips.create');
+    }
+
+    public function store(){
+        return 'stored';
+    }
+
     public function edit($zip){
         try{
             $result    = $this->zips->getZipRecord($zip);

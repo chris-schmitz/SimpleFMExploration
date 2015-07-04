@@ -1,14 +1,14 @@
 @extends('layout.default')
 
 @section('title')
-Edit Zip {{ $zipRecord['zip'] }}
+Create Zipcode Record
 @stop
 
 @section('content')
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3>Edit Zipcode {{ $zipRecord['zip'] }}</h3>
+        <h3>Create Zipcode</h3>
     </div> 
     <div class="panel-body">
         {{-- 
@@ -18,22 +18,13 @@ Edit Zip {{ $zipRecord['zip'] }}
         - Use a hidden input to note the PUT/PATCH/DELETE methods
         - Use a hidden input to add the csrf token
         --}}
-        <form action="{{ route('api.zip.update', ['zip' => $zipRecord['zip'] ]) }}" method="POST">
+        <form action="{{ route('api.zip.store') }}" method="POST">
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="recid" value="{{ $zipRecord['recid'] }}">
 
             @include('zips._partials.zipform')
             
         </form>
-        <form action="{{ route('api.zip.delete', ['zip' => $zipRecord['zip'] ]) }}" method="POST">
-            <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="recid" value="{{ $zipRecord['recid'] }}">
-
-            <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
-
     </div> 
 
     <div class="panel-footer">

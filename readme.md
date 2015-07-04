@@ -49,7 +49,7 @@ To setup the database you will need to be able to host the database on a FileMak
 
 ## Credentials
 
-Since this is a demo it's ok to post the credentials online, however *if you plan on hosting this file on a public facing server of any kind (production or development) **it is strongly recommended that you change the passwords***. Hosting any FileMaker file (even a demo file) on a public facing server with a compromised Full Access password is a huge security risk.
+Since this is a demo it's ok to post the credentials online, however if you plan on hosting this file on a public facing server of any kind (production or development) **it is strongly recommended that you change the passwords**. Hosting any FileMaker file (even a demo file) on a public facing server with a compromised Full Access password is a huge security risk.
 
 ### Full Access Account
 - Admin

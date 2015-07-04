@@ -13,11 +13,6 @@ class ZipsService {
     protected $columnsToExclude = [
         'index',
         'modid',
-        'world_region',
-        'decommissioned',
-        'estimated_population',
-        'notes',
-        'unacceptable_cities'
     ];
 
     public function __construct(Adapter $adapter){
@@ -104,6 +99,12 @@ class ZipsService {
         }
     }
 
+    /*
+    | Note: When it comes to the user added fields in FileMaker, it's better to exclude them from 
+    | the returned data by removing them from the specific layout you're accessing, in this case
+    | the Zips layout. I'm using this to remove some of the meta data columns that I don't need
+    | for this particular demo.
+    */
     protected function forgetUnnededColumns(&$returnedResult){
 
         foreach($returnedResult as $index => $columns){

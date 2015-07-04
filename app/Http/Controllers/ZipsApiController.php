@@ -20,26 +20,6 @@ class ZipsApiController extends Controller
         $this->request = $request;
     }
 
-    public function test(){
-
-        $returnRowCount = 'all';
-        if($this->request->has('returnRowCount')){
-            $returnRowCount = $this->request->get('returnRowCount');
-        } 
-
-        try{
-            $result = $this->zips->getAllZipcodes($returnRowCount);
-
-            $fields = array_keys($result['rows'][0]);
-            $rows   = $result['rows'];
-
-        } catch (\Exception $exception){
-            dd($exception->getMessage());
-        }
-
-        return view('zips.index', compact('fields', 'rows'));
-    }
-
     public function index(){
 
         $returnRowCount = 'all';

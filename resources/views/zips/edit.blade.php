@@ -47,8 +47,8 @@ Edit Zip {{ $zipRecord['zip'] }}
                 <input type="text" class="form-control" name="area_codes" value="{{ $zipRecord['area_codes'] }}">
             </div> 
             <div class="form-group">
-                <label for="country">Country</label>
-                <input type="text" class="form-control" name="country" value="{{ $zipRecord['country'] }}">
+                <label for="acceptable_cities">Acceptable Cities</label>
+                <input type="text" class="form-control" name="acceptable_cities" value="{{ $zipRecord['acceptable_cities'] }}">
             </div> 
             <div class="form-group">
                 <label for="latitude">Latitude</label>

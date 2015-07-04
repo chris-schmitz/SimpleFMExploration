@@ -41,8 +41,8 @@ class ZipsService {
             $result = $this->adapter->execute();
 
             $this->checkResultForError($result);
+            $this->columnsToExclude[] = 'recid';
             $this->forgetUnnededColumns($result['rows']);
-            dd($result);
         } catch (\Exception $exception){
             dd($exception->getMessage());
         }
@@ -107,7 +107,7 @@ class ZipsService {
     */
     protected function forgetUnnededColumns(&$returnedResult){
 
-        foreach($returnedResult as $index => $columns){
+        foreach($returnedResult as $index => $values){
             foreach($this->columnsToExclude as $column){
                 array_forget($returnedResult[$index], $column);
             }

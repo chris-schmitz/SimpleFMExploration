@@ -32,9 +32,4 @@ Zipcode Index
         @endforeach
     </table>
 </div> 
-
-<div class="well">
-    {{var_dump($rows)}}
-</div> 
-
 @stop

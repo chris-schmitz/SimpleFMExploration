@@ -16,7 +16,9 @@ Route::get('/', function () {
     return redirect('api/zips/?returnRowCount=50');
 });
 
-Route::get('api/zips/', ['as' => 'api.zip.index', 'uses' => 'ZipsApiController@index']);
+// I broke this out because I wanted to build up the API piece by piece, but it could all be constructed using one line:
+// Route::resource('api/zips', 'ZipApiController');
+Route::get('api/zips', ['as' => 'api.zip.index', 'uses' => 'ZipsApiController@index']);
 Route::get('api/zips/create', ['as' => 'api.zip.create', 'uses' => 'ZipsApiController@create']);
 Route::post('api/zips', ['as' => 'api.zip.store', 'uses' => 'ZipsApiController@store']);
 Route::get('api/zips/{zip}', ['as' => 'api.zip.edit', 'uses' => 'ZipsApiController@edit']);

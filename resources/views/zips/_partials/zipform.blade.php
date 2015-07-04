@@ -8,6 +8,10 @@ laravel inspection of `{{ isset($myvar) ? $myvar : 'default value' }}` for the v
     <input type="text" class="form-control" name="zip" value="{{ isset($zipRecord) ? $zipRecord['zip'] : null }}">
 </div> 
 <div class="form-group">
+    <label for="type">Type (PO Box, Standard, or Unique)</label>
+    <input type="text" class="form-control" name="type" value="{{ isset($zipRecord) ? $zipRecord['type'] : null }}">
+</div> 
+<div class="form-group">
     <label for="primary_city">Primary City</label>
     <input type="text" class="form-control" name="primary_city" value="{{ isset($zipRecord) ? $zipRecord['primary_city'] : null }}">
 </div> 

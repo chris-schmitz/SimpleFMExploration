@@ -17,7 +17,7 @@ class ZipsService {
 
     public function __construct(Adapter $adapter){
         $hostParameters = config('database.connections.filemaker');
-        $this->adapter = $adapter;
+        $this->adapter  = $adapter;
         $this->adapter->setHostParams($hostParameters);
         // setting the default layout, note if you want to interact with a different layout you can override it in the method
         $this->adapter->setLayoutName('Zips');
@@ -67,7 +67,7 @@ class ZipsService {
     public function storeZipRecord($zipData){
         $zipData['-db']  = 'ZipCodes';
         $zipData['-lay'] = 'Zips';
-        $zipData['-new']  = null;
+        $zipData['-new'] = null;
 
         $this->adapter->setCommandarray($zipData);
         $result = $this->adapter->execute();

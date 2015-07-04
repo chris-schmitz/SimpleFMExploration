@@ -15,13 +15,22 @@ class ZipsApiController extends Controller
     protected $zips;
     protected $request;
 
+    // These rules should include *at least* the validation rules you have in filemaker for the given table. If they don't, then you could
+    // potentially accept form data as valid that will cause an error when trying to write to FileMaker. That said, you could include 
+    // *more* validation rules than what you have in FileMaker if you want to. 
+    protected $validationRules = [
+        'zip'          => 'required|integer',
+        'type'         => 'in:PO BOX,STANDARD,UNIQUE',
+        'primary_city' => 'required',
+        'state'        => 'required',
+    ];
+
     public function __construct(ZipsService $zips, Request $request){
         $this->zips = $zips;
         $this->request = $request;
     }
 
     public function index(){
-
         $returnRowCount = 'all';
         if($this->request->has('returnRowCount')){
             $returnRowCount = $this->request->get('returnRowCount');
@@ -43,9 +52,7 @@ class ZipsApiController extends Controller
     }
 
     public function store(){
-        // Todo: Figure out the best way of adding the form validation considering we're not using eloquent
-        // we need to verify that: the zip doesn't already exist and at the very least the zip field is populated 
-
+        $this->validate($this->request, $this->validationRules);
 
         $data    = $this->request->all();
         $zipData = $this->removeNonDataKeys($data);
@@ -77,6 +84,8 @@ class ZipsApiController extends Controller
     }
 
     public function update($zip){
+        $this->validate($this->request, $this->validationRules);
+
         $data    = $this->request->all();
         $zipData = $this->removeNonDataKeys($data);
 

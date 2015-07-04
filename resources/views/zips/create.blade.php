@@ -19,7 +19,6 @@ Create Zipcode Record
         - Use a hidden input to add the csrf token
         --}}
         <form action="{{ route('api.zip.store') }}" method="POST">
-            <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             @include('zips._partials.zipform')

@@ -43,7 +43,26 @@ class ZipsApiController extends Controller
     }
 
     public function store(){
-        return 'stored';
+        // Todo: Figure out the best way of adding the form validation considering we're not using eloquent
+        // we need to verify that: the zip doesn't already exist and at the very least the zip field is populated 
+
+
+        $data    = $this->request->all();
+        $zipData = $this->removeNonDataKeys($data);
+
+        try{
+            $result = $this->zips->storeZipRecord($zipData);
+            $zipRecord = $result['rows'][0];
+
+            $message['style'] = 'success';
+            $message['text']  = "Your record has been created.";
+            $this->request->session()->flash('message', $message);
+
+        } catch (\Exception $exception){
+            dd($exception->getMessage());
+        }
+
+        return view('zips.edit', compact('zipRecord'));
     }
 
     public function edit($zip){

@@ -43,7 +43,10 @@ class ZipsApiController extends Controller
         } catch (\Exception $exception){
             dd($exception->getMessage());
         }
-
+        // todo: add in a check for a request parameter for each method
+        if($this->request->has('json') && $this->request->get('json') == true){
+            return compact(['fields', 'rows']);
+        }
         return view('zips.index', compact('fields', 'rows'));
     }
 
@@ -127,6 +130,7 @@ class ZipsApiController extends Controller
 
     protected function removeNonDataKeys($formInput){
         array_forget($formInput, '_method');
+        array_forget($formInput, 'json');
         array_forget($formInput, '_token');
         return $formInput;
     }
